@@ -1,6 +1,6 @@
 Header for group project:
 Project title: ??? 
-Name: Michael Child-Wynne-Jones, Morgenne Besenschek, Calvin ____
+Name: Michael Child-Wynne-Jones, Morgenne Besenschek, Chang Xing Li
 ID: 160335440, _______ , _________
 Statement: We claim that the enclosed project submission is our team work.
 
