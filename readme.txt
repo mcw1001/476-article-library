@@ -1,7 +1,6 @@
-Header for group project:
-Project title: ??? 
-Name: Michael Child-Wynne-Jones, Morgenne Besenschek, Calvin ____
-ID: 160335440, _______ , _________
+Project title: BookIndex 
+Name: Michael Child-Wynne-Jones, Morgenne Besenschek, Chang Xing Li
+ID: 160335440, 160895960 , 161574090
 Statement: We claim that the enclosed project submission is our team work.
 
 Evaluation grid: [self-evaluation/total/marker-evaluation]

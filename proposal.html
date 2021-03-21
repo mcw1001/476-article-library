@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Michael Child-Wynne-Jones, Morgenne Besenschek, Chang Xing Li" />
+  <meta name="dcterms.date" content="2021-03-22" />
+  <title>CP476 Project: BookIndex</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="proposal.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header>
+<h1 class="title">CP476 Project: BookIndex</h1>
+<p class="author">Michael Child-Wynne-Jones, Morgenne Besenschek, Chang Xing Li</p>
+<p class="date">2021-03-22</p>
+</header>
+<h2 id="introduction">Introduction</h2>
+<p>BookIndex is a cross between a wiki and a book reviewing website.</p>
+<p>It stores a books direct information (such as a summary, publishing information, etc) as well as external information, such as reviews, critical reception, sources/inspirations, and keywords.</p>
+<p>A user will be able to login, search books, look at and sometimes edit articles.</p>
+<h2 id="problem-solving-and-algorithms">Problem solving and algorithms</h2>
+<p>The application will be able to display chains of works that refer to, or are inspired by other works using a BFS algorithm.</p>
+<p>Essentially, a book may have a list of books that it cites as sources or that it was inspired by, and these books each have their own sources.</p>
+<p>The client would be able to click a button to see the chain of books that eventually influenced the current book.</p>
+<p>The BFS algorithm will take each source in a books Sources section and find that book (as well as its own sources, ignoring duplicates) and use this to create a “tree” of all the books that relate.</p>
+<h2 id="system-design">System Design</h2>
+<p>The application will have a login page that will determine the users role, leading to a dynamic page with search functionality, book submission, and article editing features.</p>
+<p>Access to certain pages depends on the user’s role.</p>
+<p>The login page will have the option for a user to login with a username and password, or continue as a guest.</p>
+<p>The guest will be taken to the search page, but will have no other options.</p>
+<p>If the user logs in as a user (with a first-level role) they will have book creation permissions, and can open a menu to add a book to the database.</p>
+<p>The Home page will have a search form, as well as a form for adding a book.</p>
+<p>If the user logs in as an admin (a second-level role) they will have the book creation and editing permissions, allowing them to adjust content on the site and edit articles and book data (and also delete books).</p>
+<p>The project will use html, JavaScript, Jquery, AJAX, PHP, MySQL, NodeJS, and XAMPP as tools.</p>
+<h2 id="milestones-schedule">Milestones &amp; schedule</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Task ID</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: center;">Due date</th>
+<th style="text-align: center;">Lead</th>
+<th style="text-align: center;">Role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Project research &amp; team up</td>
+<td style="text-align: center;">Day 5 of week 9</td>
+<td style="text-align: center;">Michael</td>
+<td style="text-align: center;">—–</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Project proposal</td>
+<td style="text-align: center;">Day 1 of week 10</td>
+<td style="text-align: center;">Michael</td>
+<td style="text-align: center;">—–</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Project check point</td>
+<td style="text-align: center;">Day 1 of week 11</td>
+<td style="text-align: center;">Morgenne</td>
+<td style="text-align: center;">MySQL Database design</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Project check point</td>
+<td style="text-align: center;">Day 1 of week 11</td>
+<td style="text-align: center;">Michael</td>
+<td style="text-align: center;">BFS algorithm Implementation</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">Project check point</td>
+<td style="text-align: center;">Day 1 of week 12</td>
+<td style="text-align: center;">Chang</td>
+<td style="text-align: center;">—–</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">Project demonstration</td>
+<td style="text-align: center;">Day 5 of week 12</td>
+<td style="text-align: center;">Michael</td>
+<td style="text-align: center;">—–</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">Project submission</td>
+<td style="text-align: center;">Day 5 of week 13</td>
+<td style="text-align: center;">Michael</td>
+<td style="text-align: center;">—–</td>
+</tr>
+</tbody>
+</table>
+<h2 id="references">References</h2>
+<p><a href="https://stackoverflow.com">Stackoverflow</a></p>
+</body>
+</html>
