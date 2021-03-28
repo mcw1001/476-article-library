@@ -1,0 +1,23 @@
+{
+  "name": "476-article-library",
+  "version": "1.0.0",
+  "description": "utilities package for BookIndex",
+  "main": "db-init.js",
+  "scripts": {
+    "init": "node db-init",
+    "drop": "node db-drop"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mcw1001/476-article-library.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mcw1001/476-article-library/issues"
+  },
+  "homepage": "https://github.com/mcw1001/476-article-library#readme",
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
+}
