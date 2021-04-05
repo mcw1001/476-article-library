@@ -25,7 +25,7 @@
         */
         function newCookie(name,info){ //minutes taken out
             var expireDate="";
-            if(minutes>0){
+            if(LOGIN_MINUTES>0){
                 var date = new Date();
                 date.setTime(date.getTime()+(LOGIN_MINUTES*60*1000));
                 var expireDate = "; expires="+date.toGMTString();
