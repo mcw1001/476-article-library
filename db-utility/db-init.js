@@ -55,6 +55,7 @@ connection.connect(function(err) {
         rating TINYINT NOT NULL,
         review VARCHAR(500),
         FOREIGN KEY (book_id) REFERENCES books(book_id)
+        ON DELETE CASCADE
     )`;
     connection.query(sql, function (err, result) {
         if (err) throw err;
@@ -65,7 +66,8 @@ connection.connect(function(err) {
     sql = `CREATE TABLE IF NOT EXISTS keywords (
         book_id BIGINT NOT NULL,
         keyword VARCHAR(255),
-        FOREIGN KEY (book_id) REFERENCES books(book_id),
+        FOREIGN KEY (book_id) REFERENCES books(book_id)
+        ON DELETE CASCADE,
         PRIMARY KEY(book_id, keyword)
     )`;
     connection.query(sql, function (err, result) {
@@ -77,8 +79,10 @@ connection.connect(function(err) {
     sql = `CREATE TABLE IF NOT EXISTS inspirations (
         book_id BIGINT NOT NULL,
         inspiration_id BIGINT NOT NULL,
-        FOREIGN KEY (book_id) REFERENCES books(book_id),
-        FOREIGN KEY (inspiration_id) REFERENCES books(book_id),
+        FOREIGN KEY (book_id) REFERENCES books(book_id)
+        ON DELETE CASCADE,
+        FOREIGN KEY (inspiration_id) REFERENCES books(book_id)
+        ON DELETE CASCADE,
         PRIMARY KEY(book_id, inspiration_id)
     )`;
     connection.query(sql, function (err, result) {
@@ -92,6 +96,7 @@ connection.connect(function(err) {
         book_id BIGINT PRIMARY KEY NOT NULL,
         content MEDIUMTEXT,
         FOREIGN KEY (book_id) REFERENCES books(book_id)
+        ON DELETE CASCADE
     )`;
     connection.query(sql, function (err, result) {
         if (err) throw err;

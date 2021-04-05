@@ -16,22 +16,11 @@ if($id){
     if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
     $conn->select_db("bookindex");
 
-    conn->autocommit(false); //begins transaction
+    $conn->autocommit(false); //begins transaction
 
+    //on delete cascade will handle the other tables
     $statement = $conn->prepare('DELETE FROM books WHERE book_id = ?');
     $statement->bind_param('i',$_POST["id"]);
-    $statement->execute();
-    $statement = $conn->prepare('DELETE FROM articles WHERE book_id = ?');
-    $statement->bind_param('i',$_POST["id"]);
-    $statement->execute();
-    $statement = $conn->prepare('DELETE FROM keywords WHERE book_id = ?');
-    $statement->bind_param('i',$_POST["id"]);
-    $statement->execute();
-    $statement = $conn->prepare('DELETE FROM reviews WHERE book_id = ?');
-    $statement->bind_param('i',$_POST["id"]);
-    $statement->execute();
-    $statement = $conn->prepare('DELETE FROM inspirations WHERE book_id = ? OR inspiration_id = ?');
-    $statement->bind_param('ii',$_POST["id"],$_POST["id"]);
     $statement->execute();
 
     if($conn->commit()!=TRUE){
