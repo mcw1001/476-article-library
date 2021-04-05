@@ -32,7 +32,7 @@
                     $('#txtReception').val(book.reception);
                     $('#txtArticle').val(book.content);
                 }else{
-                    $('#divStatus').html(result);
+                    $('#bookUpdateOutput').html(result);
                 }
                 
             })
@@ -53,7 +53,16 @@
                 data: {id: book_id, name: txtTitle, author: txtAuthor, publisher: txtPublisher,
                     publishdate: datePublished, description: txtDescription, reception: txtReception}
             }).done(function (result){
-                $("#divStatus").html(""+result);
+                $("#bookUpdateOutput").html(""+result);
+            })
+        }
+        function removeBook(){
+            $.ajax({
+                type:"POST",
+                url: "remove_book.php",
+                data: {id: book_id}
+            }).done(function (result){
+                $("#bookUpdateOutput").html(""+result);
             })
         }
 
@@ -119,6 +128,7 @@
         Reception:<br/> 
         <textarea id="txtReception" rows="6" cols="30" name="reception" value="" ></textarea><br />
         <input type="button" value = "Update Book" onclick="updateBook()"/></p><br/> 
+        <input type="button" value = "Delete Book" onclick="removeBook()"/>
         <p id="bookUpdateOutput"></p>
         <p>Keywords: <input type="text" id="txtKeywords" name="keywords" value="" /><br />
         <input type="button" value = "Add Keywords" onclick="addKeywords()"/></p>

@@ -21,15 +21,12 @@ $publisher = $_POST["publisher"];
 
 
 $checkall = $_POST['checkall'];
-$sql="";
-if($checkall==0){ // && ($sqlName || $sqlAuthor || $sqlPublisher)
-    //this is probably vulnerable to injection now that I think abt it
-    $sql = "SELECT * FROM books INNER JOIN articles ON books.book_id=articles.book_id
-    WHERE name LIKE '%$name%' OR author LIKE '%$author%' OR publisher LIKE '%$publisher%' LIMIT 1";
-}else if ($checkall==1){
-    $sql = "SELECT * FROM books INNER JOIN articles ON books.book_id=articles.book_id
-    WHERE name LIKE '%$name%' OR author LIKE '%$author%' OR publisher LIKE '%$publisher%'";
-}else{
+$sql="SELECT * FROM books INNER JOIN articles ON books.book_id=articles.book_id
+WHERE ('$name'!='' AND name LIKE '%$name%') OR ('$author'!='' AND author LIKE '%$author%') 
+OR ('$publisher'!='' AND publisher LIKE '%$publisher%') ";
+if($checkall==0){ 
+    $sql .= "LIMIT 1";
+}else if ($checkall!=1){
     $sql = "SELECT * FROM books INNER JOIN articles ON books.book_id=articles.book_id";
 }
 $result = $conn->query($sql);

@@ -61,13 +61,28 @@ connection.connect(function(err) {
         console.log("book3 added");
     });
 
-    // test articles
+    // test articles //added more, as book_search looks thru books JOINed with articles, and a book without
+    //      an article doesn't show up in search results
     sql = `INSERT INTO articles (book_id,content)
     VALUES (1, "my big article goes here")`;
     connection.query(sql, function (err, result) {
         if (err) throw err;
         console.log("article for book1 added");
     });
+
+    sql = `INSERT INTO articles (book_id,content)
+    VALUES (2, "my big article 2 goes here")`;
+    connection.query(sql, function (err, result) {
+        if (err) throw err;
+        console.log("article for book2 added");
+    });
+    sql = `INSERT INTO articles (book_id,content)
+    VALUES (3, "my big article 3 goes here")`;
+    connection.query(sql, function (err, result) {
+        if (err) throw err;
+        console.log("article for book3 added");
+    });
+    
 
     // test inspirations
 
