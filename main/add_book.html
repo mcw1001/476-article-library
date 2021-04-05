@@ -1,0 +1,56 @@
+<html>
+<head>
+    <title>Add Book to Database</title>
+    
+    <script src="jquery-3.5.1.js"></script>
+    <script>
+        //TODO convert string date to date
+        //used date-fns w/ npm install date-fns?
+        // nah just ask for each seperately, db stores them in year/month/day format
+        function addBook(){
+            var txtTitle=$('#txtTitle').val();
+            var txtAuthor = $('#txtAuthor').val();
+            var txtPublisher = $('#txtPublisher').val();
+            var datePublished  = $('#datePublished').val();//.toString();//""+year+"/"+month+"/"+day;
+            var txtDescription = $('#txtDescription').val();
+            var txtReception = $('#txtReception').val();
+
+            $.ajax({
+                type:"POST",
+                url: "add_book.php",
+                data: {name: txtTitle, author: txtAuthor, publisher: txtPublisher,
+                    publishdate: datePublished, description: txtDescription, reception: txtReception}
+            }).done(function (result){
+                $("#divStatus").html(""+result);
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <!-- <input type="text" id="datePublished" name="date" value="" /> -->
+    <p>New Book!</p>
+    <!-- <p>(You can add an Article, Reviews, and Inspirations after the book is created.)</p> -->
+    <p>Title: <input type="text" id="txtTitle" name="name" value="" /><br />
+    Author: <input type="text" id="txtAuthor" name="author" value="" /><br />
+    Publisher: <input type="text" id="txtPublisher" name="publisher" value="" /><br />
+    Date Published:<input type="date" id="datePublished" name="date"/><br/>
+    Description:<br/> 
+    <textarea id="txtDescription" rows="6" cols="30" name="description" value="" ></textarea><br />
+    Reception:<br/> 
+    <textarea id="txtReception" rows="6" cols="30" name="reception" value="" ></textarea><br />
+    <!-- <p><input type="submit" value="save_info"/></p> -->
+    <p><input type="button" value = "Add Book" onclick="addBook()"/></p>
+    
+    <div id="divStatus"></div>
+</body>
+</html>
+
+<!--
+
+
+<form method="post" action="addcustomer.php" target = "hiddenFrame">
+
+</form> 
+
+-->

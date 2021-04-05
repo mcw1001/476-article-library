@@ -33,7 +33,7 @@ connection.connect(function(err) {
         console.log("Created users table!");
     });
 
-    // BOOKS TABLE
+    // BOOKS TABLE --changed publish_date to VARCHAR? see if this helps at all
     sql = `CREATE TABLE IF NOT EXISTS books (
         book_id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL, 
         name VARCHAR(255) NOT NULL,
@@ -86,6 +86,7 @@ connection.connect(function(err) {
         console.log("Created inspirations table!");
     });
 
+    //TODO make unique? only one article/book
     // ARTICLES TABLE
     sql = `CREATE TABLE IF NOT EXISTS articles (
         book_id BIGINT PRIMARY KEY NOT NULL,

@@ -1,0 +1,43 @@
+<html>
+<head>
+    <title>Add User to Database</title>
+    
+    <script src="jquery-3.5.1.js"></script>
+    <script>
+        function addUser(){
+            var txtAddName=$('#txtAddName').val();
+            var txtAddPass = $('#txtAddPass').val();
+            var numRole = $('#numRole').val();
+
+            $.ajax({
+                type:"POST",
+                url: "add_user.php",
+                data: {name: txtAddName, pass: txtAddPass, role: numRole}
+            }).done(function (result){
+                $("#divStatus").html(""+result);
+            })
+        }
+    </script>
+</head>
+
+<body>
+    
+    <p>Enter new user information:</p>
+    <p>Name: <input type="text" id="txtAddName" name="name" value="" /><br />
+    Password: <input type="text" id="txtAddPass" name="pass" value="" /><br />
+    Role: <input size = "10" id="numRole" name="role" value="" /></p>
+    <!-- <p><input type="submit" value="save_info"/></p> -->
+    <p><input type="button" value = "Add User" onclick="addUser()"/></p>
+    
+    <div id="divStatus"></div>
+</body>
+</html>
+
+<!--
+
+
+<form method="post" action="addcustomer.php" target = "hiddenFrame">
+
+</form> 
+
+-->

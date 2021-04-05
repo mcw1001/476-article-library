@@ -15,46 +15,54 @@ connection.connect(function(err) {
     let sql;
 
     // test users
-
+    //password is 'password123', stored as an sha256 hash
     sql = `INSERT IGNORE INTO users (username, password, role)
-    VALUES ("userguy", "password123", 1)`;
+    VALUES ("userguy", "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f", 1)`;
     connection.query(sql, function (err, result) {
         if (err) throw err;
         console.log("user added");
     });
 
-    sql = `INSERT IGNORE INTO users (username, password, role)
-    VALUES ("adminguy", "password123", 2)`;
-    connection.query(sql, function (err, result) {
-        if (err) throw err;
+    // sql = `INSERT IGNORE INTO users (username, password, role)
+    // VALUES ("adminguy", "password123", 2)`;
+    // connection.query(sql, function (err, result) {
+    //     if (err) throw err;
+    //     console.log("admin added");
+    // });
+
+    //the password is 'pass', stored in an sha256 hash
+    sql=`INSERT INTO users(username, password, role)
+    VALUES ("admin", "d74ff0ee8da3b9806b18c877dbf29bbde50b5bd8e4dad7a3a725000feb82e8f1", 2)`;
+    connection.query(sql,function(err, result){
+        if(err) throw err;
         console.log("admin added");
-    });
+    })
 
     // test books
-
-    sql = `INSERT IGNORE INTO books (name, author, publisher, publish_date, description, reception) 
-    VALUES ("book1", "author1", "publisher1", 2001/04/01, "a cool book and all that", "positive")`;
+    //removed IGNORE to see any errors
+    sql = `INSERT INTO books (name, author, publisher, publish_date, description, reception) 
+    VALUES ("book1", "author1", "publisher1", "2001/04/01", "a cool book and all that", "positive")`;
     connection.query(sql, function (err, result) {
         if (err) throw err;
         console.log("book1 added");
     });
 
-    sql = `INSERT IGNORE INTO books (name, author, publisher, publish_date, description, reception) 
-    VALUES ("book2", "author2", "publisher1",  1999/02/24, "another cool book and all that", "positive")`;
+    sql = `INSERT INTO books (name, author, publisher, publish_date, description, reception) 
+    VALUES ("book2", "author2", "publisher1",  "1999/02/24", "another cool book and all that", "positive")`;
     connection.query(sql, function (err, result) {
         if (err) throw err;
         console.log("book2 added");
     });
     
-    sql = `INSERT IGNORE INTO books (name, author, publisher, publish_date, description, reception) 
-    VALUES ("book3", "author3", "publisher2", 1999/01/01, "book", "positive")`;
+    sql = `INSERT INTO books (name, author, publisher, publish_date, description, reception) 
+    VALUES ("book3", "author3", "publisher2", "1999/01/01", "book", "positive")`;
     connection.query(sql, function (err, result) {
         if (err) throw err;
         console.log("book3 added");
     });
 
     // test articles
-    sql = `INSERT IGNORE INTO articles 
+    sql = `INSERT INTO articles (book_id,content)
     VALUES (1, "my big article goes here")`;
     connection.query(sql, function (err, result) {
         if (err) throw err;
@@ -63,21 +71,21 @@ connection.connect(function(err) {
 
     // test inspirations
 
-    sql = `INSERT IGNORE INTO inspirations (book_id, inspiration_id)
+    sql = `INSERT INTO inspirations (book_id, inspiration_id)
     VALUES (1, 2)`
     connection.query(sql, function (err, result) {
         if (err) throw err;
         console.log("inspiration added");
     });
 
-    sql = `INSERT IGNORE INTO inspirations (book_id, inspiration_id)
+    sql = `INSERT INTO inspirations (book_id, inspiration_id)
     VALUES (1, 3)`
     connection.query(sql, function (err, result) {
         if (err) throw err;
         console.log("inspiration added");
     });
 
-    sql = `INSERT IGNORE INTO inspirations (book_id, inspiration_id)
+    sql = `INSERT INTO inspirations (book_id, inspiration_id)
     VALUES (2, 3)`
     connection.query(sql, function (err, result) {
         if (err) throw err;

@@ -1,0 +1,145 @@
+<html>
+<head>
+    <title>Login</title>
+    <meta name="keywords" content="HTML, jquery, cookie, JavaScript">
+    <script src="jquery-3.5.1.js"></script>
+    <script>
+        const LOGIN_MINUTES = 30;
+        var isCookie = 0;
+        
+        var usrName = getCookie("username");
+        var usrPass = getCookie("password");
+        var usrRole = getCookie("role");
+        if(usrName){ //checking if both username and password are in cookie already
+            //  for auto sign-in
+            if(usrPass){
+                // console.log("Cookies found! "+usrName+", "+usrPass);
+                isCookie=1;
+                login();
+            }else{
+                usrName="";
+                usrPass="";
+            }
+        }
+        /*Function to Create a new Cookie
+        */
+        function newCookie(name,info){ //minutes taken out
+            var expireDate="";
+            if(minutes>0){
+                var date = new Date();
+                date.setTime(date.getTime()+(LOGIN_MINUTES*60*1000));
+                var expireDate = "; expires="+date.toGMTString();
+            }
+            document.cookie = name+"="+info+expireDate;//+" path=/";
+        }
+        /* Retrieve a cookie
+        */
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var cookieArray = document.cookie.split(';');
+            for(var i=0;i < cookieArray.length;i++) {
+                var cookie = cookieArray[i];
+                while (cookie.charAt(0)==' ') cookie = cookie.substring(1,cookie.length);
+                if (cookie.indexOf(nameEQ) == 0) return cookie.substring(nameEQ.length,cookie.length);
+            }
+            return null;
+        }
+        function eraseCookie(name){
+            document.cookie = name+'=; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';//+" path=/";
+        }
+
+        function logout(){
+            eraseCookie("username");
+            eraseCookie("password");
+            eraseCookie("role");
+            $('#divFindUser').empty();
+            $('#divAddUser').empty();
+            $('#divBookshelf').empty();
+            location.reload(); //refreshes the page
+            // $("#divLoginStatus").html("Logged out.");
+            isCookie==0;
+        }
+
+        function login(){
+            //check if cookie filled-in values already
+            if(isCookie==0){// || usrName==""||usrPass==""){
+                usrName=$('#usrName').val();
+                usrPass = $('#usrPass').val();
+            }
+            // var divOut="";
+            $.ajax({
+                type:"POST",
+                url: "login.php",
+                data: {name: usrName, pass: usrPass}
+            }).done(function (result){
+                // $("#divLoginStatus").html(""+result);
+                result = result.trim()
+                var slice = result.slice(0,5);
+                if(result=="fail"){
+                    $("#divLoginStatus").html("User '"+usrName+"' was not found.");
+
+                }else if(result == "no"){
+                    $("#divLoginStatus").html("Password is incorrect.");
+
+                }else if(slice=="role#"){
+                    // $("#loginForm").hide();//clears this part to make "new page"
+                    //save info in cookie if cookie doesn't already exist?
+                    // ifcookies aren't set
+                    if(isCookie==0){
+                        newCookie("username",usrName);
+                        newCookie("password",usrPass);
+                        // console.log("Created cookies! "+usrName+", "+usrPass);
+                        isCookie==1;
+                    }
+
+
+                    $("#divLoginStatus").html("Welcome, "+usrName+".");
+                    var role= parseInt(result.split("#")[1]);
+                    // $('#userList').html("<button type='button' onclick='alert(/aaa/)'>ALERT</button>")
+                    if(!isNaN(role)){
+                        switch(role){
+                            case 2:
+                                $('#divFindUser').load("search_user.html");
+                                $('#divAddUser').load("add_user.html");
+                                $('#divBookshelf').empty();
+                                break;
+                            case 1:
+                                $('#divFindUser').empty();
+                                $('#divAddUser').empty();
+                                $('#divBookshelf').load("bookshelf.html");
+                                break;
+                            default:
+                                break;
+                        }
+                        newCookie("role",role);
+                    }else{
+                        // console.log("role=='"+role+"'");
+                    }
+                }else{
+                    $("#divLoginStatus").html("Error: "+result);
+                    // $("#divLoginStatus").html(slice+"=='role#'? "+(slice=="role#"));
+                }
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <form id="loginForm">
+        <p>Enter login information:</p>
+        <p>Name: <input type="text" id="usrName" name="name" value="" size="20"/><br />
+        Password: <input type="text" id="usrPass" name="pass" value="" size="20"/></p>
+        <!-- <p><input type="submit" value="save_info"/></p> -->
+        <p><input type="button" value = "Login" onclick="login()"/>
+            <input type="button" value = "Logout" onclick="logout()"/></p>
+    </form>
+    <div id="divLoginStatus"></div>
+
+    <!-- <p id=></p> -->
+    <!-- Maybe find user could also list users instead? -->
+    <div id="divFindUser"></div>
+    <div id="divListUsers"></div>
+    <div id="divAddUser"></div>
+    <div id="divBookshelf"></div>
+</body>
+</html>

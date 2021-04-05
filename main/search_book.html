@@ -1,0 +1,71 @@
+<html>
+    <style>
+        table,th,td {
+        border : 1px solid black;
+        border-collapse: collapse;
+        }
+        th,td {
+        padding: 5px;
+        }
+    </style>
+<head>
+    <title>Search for a Book</title>
+    
+    <script src="jquery-3.5.1.js"></script>
+    <script>
+        function findBook(){
+            var srcName=$('#srcTitle').val();
+            var srcAuthor=$('#srcAuthor').val();
+            var srcPublisher=$('#srcPublisher').val();
+            $.ajax({
+                type:"POST",
+                url: "search_book.php",
+                data: {name: srcName, author: srcAuthor, publisher: srcPublisher, checkall:0}
+            }).done(function (result){
+                // $("#divStatus").html("User info: "+result);
+                // $("#userTable").html(result);
+                $('#divBooks').html(result);
+            })
+        }
+        function listBooks(){
+            var srcName=$('#srcTitle').val();
+            var srcAuthor=$('#srcAuthor').val();
+            var srcPublisher=$('#srcPublisher').val();
+            $.ajax({
+                type:"POST",
+                url: "search_book.php",
+                data: {name: srcName, author: srcAuthor, publisher: srcPublisher, checkall:1}
+            }).done(function (result){
+                // $("#divStatus").html("User info: "+result);
+                // $("#userTable").html(result);
+                $('#divBooks').html(result);
+            })
+        }
+    </script>
+</head>
+
+<body>
+    
+    <p>Search for a user by name:</p>
+    
+    <p>Title: <input type="text" id="srcTitle" name="name" value="" /><br />
+        Author: <input type="text" id="srcAuthor" name="author" value="" /><br />
+        Publisher: <input type="text" id="srcPublisher" name="publisher" value="" /><br />
+    <p><input type="button" value = "Find Book" onclick="findBook()"/>
+        <input type="button" value = "List all books" onclick="listBooks()"/></p>
+    
+    
+    <!-- <div id="divStatus"></div> -->
+    <!-- <table id="userTable"></table> -->
+    <div id="divBooks"></div>
+</body>
+</html>
+
+<!--
+
+
+<form method="post" action="addcustomer.php" target = "hiddenFrame">
+
+</form> 
+
+-->
