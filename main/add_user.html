@@ -25,7 +25,10 @@
     <p>Enter new user information:</p>
     <p>Name: <input type="text" id="txtAddName" name="name" value="" /><br />
     Password: <input type="text" id="txtAddPass" name="pass" value="" /><br />
-    Role: <input size = "10" id="numRole" name="role" value="" /></p>
+    Role: <select name="role" id="numRole">
+        <option value="1">guest</option>
+        <option value="2">admin</option>
+    </select></p>
     <!-- <p><input type="submit" value="save_info"/></p> -->
     <p><input type="button" value = "Add User" onclick="addUser()"/></p>
     
