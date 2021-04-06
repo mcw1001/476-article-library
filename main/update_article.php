@@ -1,4 +1,3 @@
-
 <?php
 
 
@@ -15,28 +14,23 @@ $dbname = "bookindex";
  *  reception: txtReception, keywords: txtKeywords}
          
     */
-
 $id = (int)$_POST["id"];
-//split keyword string into array of keywords, by whitespace, comma, or newline
-if($_POST["keywords"]!=''){
-    $keywords = preg_split('/[\ \n\,]+/',trim($_POST["keywords"]));
-}else{$keywords=NULL;}
-if($id && $keywords){
-    // $errorFlag=0;
+$article = $_POST["article"];
+if($id && $article){
     //enable special error reporting
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     $conn = new mysqli($servername, $username, $password);
     if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
     $conn->select_db("bookindex");
-    foreach($keywords as $keyword){
-        echo $keyword."\n";
-        $statement = $conn->prepare("INSERT INTO keywords(book_id,keyword) VALUES(?, ?)");
-        $statement->bind_param('is',$id,$keyword);
-        if($statement->execute()!=TRUE){
-            echo "\nError: ".$conn->error;
-            // $errorFlag=1;
-            break;
-        }
+
+    $sql = "UPDATE LOW_PRIORITY articles
+    SET content = '$article'
+    WHERE book_id = $id";
+    
+    if($conn->query($sql)!=TRUE){
+        echo "\nError: ".$conn->error;
+    }else{
+        echo "Book updated successfully!";
     }
 
     $conn->close();

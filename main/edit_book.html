@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Add Book to Database</title>
+    <title>Find and Edit a book</title>
     
     <script src="jquery-3.5.1.js"></script>
     <script>
@@ -21,7 +21,7 @@
                     $('#divResults').show();
                     var book = JSON.parse(result);
                     book_id=book.book_id;
-                    console.log(book_id);
+                    // console.log(book_id);
                     $('#bookID').html("Database ID: "+book.book_id);
                     $('#txtTitle').val(book.name);
                     $('#txtAuthor').val(book.author);
@@ -35,9 +35,23 @@
                     $('#bookUpdateOutput').html(result);
                 }
                 
-            })
+            });
+            // findKeywords();
+            //TODO search keywords here also?? another ajax I guess
 
             
+        }
+
+        function findKeywords(){
+            
+            $.ajax({
+                type:"POST",
+                url: "search_keywords.php",
+                data: {id: book_id}
+            }).done(function(result){
+                // console.log(result);
+                $('#keywordUpdateOutput').html(result);
+            });
         }
         function updateBook(){
 
@@ -56,6 +70,17 @@
                 $("#bookUpdateOutput").html(""+result);
             })
         }
+        function updateArticle(){
+            var txtArticle=$('#txtArticle').val();
+
+            $.ajax({
+                type:"POST",
+                url: "update_article.php",
+                data: {id: book_id, article: txtArticle}
+            }).done(function (result){
+                $("#articleUpdateOutput").html(""+result);
+            })
+        }
         function removeBook(){
             $.ajax({
                 type:"POST",
@@ -66,6 +91,16 @@
             })
         }
 
+        function addKeywords(){
+            var txtKeywords = $('#txtKeywords').val();
+            $.ajax({
+                type:"POST",
+                url: "add_keywords.php",
+                data: {id: book_id, keywords: txtKeywords}
+            }).done(function (result){
+                $("#keywordUpdateOutput").html(""+result);
+            })
+        }
         /*Function to Create a new Cookie
         */
         function newCookie(name,info,minutes){
@@ -129,13 +164,16 @@
         <textarea id="txtReception" rows="6" cols="30" name="reception" value="" ></textarea><br />
         <input type="button" value = "Update Book" onclick="updateBook()"/></p><br/> 
         <input type="button" value = "Delete Book" onclick="removeBook()"/>
+        <input type="button" value = "Get Keywords" onclick="findKeywords()"/>
         <p id="bookUpdateOutput"></p>
-        <p>Keywords: <input type="text" id="txtKeywords" name="keywords" value="" /><br />
-        <input type="button" value = "Add Keywords" onclick="addKeywords()"/></p>
+        <p>Keywords: <p id="keywordList"></p><br />
+        <input type="button" value = "Add Keywords" onclick="addKeywords()"/>
+        <input type="text" id="txtKeywords" name="keywords" value="" /><br /></p>
+        <p id="keywordUpdateOutput"></p>
         Article:<br/> 
         <textarea id="txtArticle" rows="15" cols="30" name="article" value="" ></textarea><br />
         <p><input type="button" value = "Update Article" onclick="updateArticle()"/></p><br />
-        
+        <p id="articleUpdateOutput"></p>
     </div>
     
     <div id="divStatus"></div>

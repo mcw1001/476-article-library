@@ -58,7 +58,7 @@ if($result->num_rows > 0){
     $returnStr.=$json;
 
 }else{
-    echo "No user named '$name' was found.";
+    echo "No book found.";
 }
 echo $returnStr;
 
