@@ -22,7 +22,7 @@ if($result === FALSE){
         //encode in JSON then convert to string?
         // $books=[];
         while ($row = $result->fetch_assoc()) {
-            $returnStr .= $row["keyword"].",";
+            $returnStr .= $row["keyword"]." ";
         }
         // $json=json_encode($books);
         // $returnStr.=$json;
