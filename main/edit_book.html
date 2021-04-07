@@ -12,7 +12,8 @@
             $.ajax({
                 type:"POST",
                 url: "search_book.php",
-                data: {name: srcName, author: srcAuthor, publisher: srcPublisher, checkall:0}
+                data: {name: srcName, author: srcAuthor, publisher: srcPublisher,
+                 checkall:0, getKeywords:1}
             }).done(function (result){
                 //start with? substr( $string_n, 0, 4 ) === "http"
                 // console.log(result);
@@ -32,16 +33,13 @@
                     $('#txtDescription').val(book.description);
                     $('#txtReception').val(book.reception);
                     $('#txtArticle').val(book.content);
+                    $('#keywordList').html("Keywords: "+book.keywords);
                     $('#divStatus').html('');
                 }else{
                     $('#divStatus').html(result);
                 }
                 
             });
-            // findKeywords();
-            //TODO search keywords here also?? another ajax I guess
-            // if(book_id){
-            // findKeywords();}
         }
         function backToSearch(){
             $('#divResults').hide();
@@ -103,7 +101,8 @@
                 url: "add_keywords.php",
                 data: {id: book_id, keywords: txtKeywords}
             }).done(function (result){
-                $("#keywordUpdateOutput").html(""+result);
+                // $("#keywordUpdateOutput").html(""+result);
+                findKeywords();//TODO maybe not in scope if called here?
             })
         }
         /*Function to Create a new Cookie
@@ -168,7 +167,7 @@
         <textarea id="txtReception" rows="6" cols="30" name="reception" value="" ></textarea><br />
         <input type="button" value = "Update Book" onclick="updateBook()"/></p><br/> 
         <input type="button" value = "Delete Book" onclick="removeBook()"/>
-        <input type="button" value = "Get Keywords" onclick="findKeywords()"/>
+        <!-- <input type="button" value = "Get Keywords" onclick="findKeywords()"/> -->
         <p id="bookUpdateOutput"></p>
         <p><p id="keywordList">Keywords: </p><br />
         <input type="button" value = "Add Keywords" onclick="addKeywords()"/>

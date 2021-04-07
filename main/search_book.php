@@ -21,6 +21,9 @@ $publisher = $_POST["publisher"];
 
 
 $checkall = $_POST['checkall'];
+
+$getKeywords = $_POST['getKeywords'];
+
 $sql="SELECT * FROM books INNER JOIN articles ON books.book_id=articles.book_id
 WHERE ('$name'!='' AND name LIKE '%$name%') OR ('$author'!='' AND author LIKE '%$author%') 
 OR ('$publisher'!='' AND publisher LIKE '%$publisher%') ";
@@ -37,23 +40,26 @@ if($result === FALSE){
 
 $returnStr="";
 if($result->num_rows > 0){
-    //encode in JSON then convert to string?
     $books=[];
     while ($row = $result->fetch_assoc()) {
         if($checkall==0){
             $books=$row;
+            if($getKeywords){
+                //pass mysqli variable and book id to function to get keywords
+                $books["keywords"]=searchKeywords($conn,$row["book_id"]);
+            }
         }else{
             $books[$row['book_id']]=$row;
+            if($getKeywords){
+                //pass mysqli variable and book id to function to get keywords
+                $temp = $books[$row['book_id']];
+                $temp["keywords"]=searchKeywords($conn,$row["book_id"]);
+            }
         }
 
-        //area to sql select inspirations?
+        
     }
-    // $returnStr="<table id='bookTable'><tr><th>ID</th><th>Name</th><th>Password</th><th>Role</th></tr>";
-    // while ($row = $result->fetch_assoc()) {
-    //     $returnStr.="<tr><td>".$row['id']."</td><td>".$row['name'].
-    //     "</td><td>".$row['password']."</td><td>".$row['role']."</td></tr>";
-    // }
-    //$returnStr .="</table>";
+    //package in json string to be read by client
     $json=json_encode($books);
     $returnStr.=$json;
 
@@ -63,4 +69,30 @@ if($result->num_rows > 0){
 echo $returnStr;
 
 $conn->close();
+
+
+function searchKeywords($mysqli, $id){
+    $sql="SELECT * FROM keywords WHERE book_id=$id LIMIT 100";
+    $result = $mysqli->query($sql);
+    
+    $returnStr="";
+    if($result === FALSE){
+        $returnStr= "\nError: ".$mysqli->error;
+    }else{
+        if($result->num_rows > 0){
+            //encode in JSON then convert to string?
+            // $books=[];
+            while ($row = $result->fetch_assoc()) {
+                $returnStr .= $row["keyword"]." ";
+            }
+            // $json=json_encode($books);
+            // $returnStr.=$json;
+    
+        }else{
+            $returnStr= "No keywords found.";
+        }
+        
+    }
+    return $returnStr;
+}
 ?>

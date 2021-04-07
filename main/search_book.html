@@ -13,6 +13,7 @@
     
     <script src="jquery-3.5.1.js"></script>
     <script>
+        var book_id;
         function findBook(){
             var srcName=$('#srcTitle').val();
             var srcAuthor=$('#srcAuthor').val();
@@ -20,11 +21,21 @@
             $.ajax({
                 type:"POST",
                 url: "search_book.php",
-                data: {name: srcName, author: srcAuthor, publisher: srcPublisher, checkall:0}
+                data: {name: srcName, author: srcAuthor, publisher: srcPublisher, checkall:0, getKeywords:0}
             }).done(function (result){
                 // $("#divStatus").html("User info: "+result);
                 // $("#userTable").html(result);
-                $('#divBooks').html(result);
+                // 
+                if(!result.startsWith("No")){
+                    $('#divInspoBase').show();
+                    var obj = JSON.parse(result);
+                    book_id=obj["book_id"];
+                    var t = makeTable(obj);
+                    $('#divBooks').html(t);
+                }else{
+                    $('#divBooks').html(result);
+                }
+                $('#divInspo').html('');
             })
         }
         function listBooks(){
@@ -34,12 +45,53 @@
             $.ajax({
                 type:"POST",
                 url: "search_book.php",
-                data: {name: srcName, author: srcAuthor, publisher: srcPublisher, checkall:1}
+                data: {name: srcName, author: srcAuthor, publisher: srcPublisher, checkall:1, getKeywords:0}
             }).done(function (result){
                 // $("#divStatus").html("User info: "+result);
                 // $("#userTable").html(result);
                 $('#divBooks').html(result);
             })
+        }
+
+        function listInspos(){
+            $.ajax({
+                type:"POST",
+                url: "inspiration_list_gen.php",
+                data: {id: book_id}
+            }).done(function (result){
+                // $("#divStatus").html("User info: "+result);
+                // $("#userTable").html(result);
+                // 
+                if(!result.startsWith("No") && !result.startsWith("Error")){
+                    var obj = JSON.parse(result);
+                    var t="";
+                    for(var key in obj){
+                        // console.log(key);
+                        if(obj.hasOwnProperty(key)){
+                            // console.log(key + " -> " + obj[key]);
+                            t += makeTable(obj[key]);
+                        }
+                    }
+                    $('#divInspo').html(t);
+                }else{
+                    $('#divInspo').html(result);
+                }
+            })
+        }
+
+        function makeTable(obj){
+            //assumin json obj
+            var table = "<table>";
+            for(var key in obj){
+                if(obj.hasOwnProperty(key)){
+                    // console.log(key + " -> " + obj[key]);
+                    if(!(key=="content")){
+                        table+="<tr><td>"+key+"</td><td>"+obj[key]+"</td></tr>";
+                    }
+                }
+            }
+            table+="</table>";
+            return table;
         }
     </script>
 </head>
@@ -52,13 +104,19 @@
         Author: <input type="text" id="srcAuthor" name="author" value="" /><br />
         Publisher: <input type="text" id="srcPublisher" name="publisher" value="" /><br />
     <p><input type="button" value = "Find Book" onclick="findBook()"/>
-        <input type="button" value = "List all books" onclick="listBooks()"/></p>
-    
+    </p>
+        <!-- <input type="button" value = "List all books" onclick="listBooks()"/> -->
     
     <!-- <div id="divStatus"></div> -->
     <!-- <table id="userTable"></table> -->
     <div id="divBooks"></div>
-</body>
+    <div id="divInspoBase" style="display:none">
+        <p></p>
+        <input type="button" value = "List Inspirations" onclick="listInspos()"/>
+        <div id="divInspo"></div>
+    </div>
+    
+    </body>
 </html>
 
 <!--
