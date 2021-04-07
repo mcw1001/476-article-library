@@ -82,13 +82,9 @@
                     $("#divLoginStatus").html("Password is incorrect.");
 
                 }else if(slice=="role#"){
-                    // $("#loginForm").hide();//clears this part to make "new page"
-                    //save info in cookie if cookie doesn't already exist?
-                    // ifcookies aren't set
                     if(isCookie==0){
                         newCookie("username",usrName);
                         newCookie("password",usrPass);
-                        // console.log("Created cookies! "+usrName+", "+usrPass);
                         isCookie==1;
                     }
 
@@ -101,14 +97,20 @@
                             case 2:
                                 $('#divFindUser').load("search_user.html");
                                 $('#divAddUser').load("add_user.html");
-                                $('#divBookshelf').empty();
+                                $('#divBookEdit').show();
+                                $('#divBookshelf').load("add_book.html");
                                 break;
                             case 1:
                                 $('#divFindUser').empty();
-                                $('#divAddUser').empty();
-                                $('#divBookshelf').load("bookshelf.html");
+                                $('#divAddUser').load("add_book.html");
+                                $('#divBookEdit').hide();
+                                $('#divBookshelf').load("search_book.html");
                                 break;
                             default:
+                                $('#divFindUser').empty();
+                                $('#divAddUser').empty();
+                                $('#divBookEdit').hide();
+                                $('#divBookshelf').load("search_book.html");
                                 break;
                         }
                         newCookie("role",role);
@@ -117,7 +119,6 @@
                     }
                 }else{
                     $("#divLoginStatus").html("Error: "+result);
-                    // $("#divLoginStatus").html(slice+"=='role#'? "+(slice=="role#"));
                 }
             })
         }
@@ -135,10 +136,13 @@
     </form>
     <div id="divLoginStatus"></div>
 
-    <!-- <p id=></p> -->
-    <!-- Maybe find user could also list users instead? -->
     <div id="divFindUser"></div>
     <div id="divListUsers"></div>
+    <div id="divBookEdit" style="display:none">
+        <form action="edit_book.html" method="get">
+            <input type="submit" value="Edit Books"/>
+        </form>
+    </div>
     <div id="divAddUser"></div>
     <div id="divBookshelf"></div>
 </body>
