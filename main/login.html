@@ -6,7 +6,16 @@
     <script>
         const LOGIN_MINUTES = 30;
         var isCookie = 0;
-        
+        // run init_db to see if db exists and create it if not
+        function checkDB(){
+            $.ajax({
+            type:"POST",
+            url: "init_db.php",
+            data: {}
+            });
+        }
+        checkDB();//run on load
+
         var usrName = getCookie("username");
         var usrPass = getCookie("password");
         var usrRole = getCookie("role");
