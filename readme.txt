@@ -19,7 +19,7 @@ P2 System design & implementation
 P2.1 Client side component & UI           [25/30/*]
 P2.2 Server side CGI components           [60/60/*]
 P2.3 Database tier design, data, usage    [30/30/*]
-P2.4 New features and tools               [20/30/*]
+P2.4 New features and tools               [25/30/*]
 P2.5 Problem solving algorithms           [30/30/*]
 P2.6 Efficiency and robustness            [20/20/*]
 
@@ -29,4 +29,4 @@ P3.2 Project demonstration                [10/10/*]
 P3.3 Project documentation                [10/10/*]
 P3.4 Project presentation                 [10/10/*]
 
-Total:                                   [285/300/*]
+Total:                                   [290/300/*]

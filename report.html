@@ -1,0 +1,28 @@
+<h1 id="proof-of-accomplishment-system-design-implementation">Proof of Accomplishment: System design &amp; implementation</h1>
+<h2 id="p2.1-client-side-component-ui-2530">P2.1 Client side component &amp; UI [25/30/*]</h2>
+<p>While our UI is not stylish, it is responsive and robust. We use JQuery to create dynamic, responsive webpages, which are tailored to a user’s permissions and which use cookies to keep users logged in for 30 minutes.</p>
+<p><img src="images/admin_screen.png" alt="The home screen for an Admin when logged in" width="600" /> <img src="images/admin_screen_cookie.png" alt="The screen remains after refreshing the page, as there are cookies storing username and password" width="600" /></p>
+<h2 id="p2.2-server-side-cgi-components-6060">P2.2 Server side CGI components [60/60/*]</h2>
+<p>Our page use AJAX to communicate with the server side components, which are written in PHP. For example, the login page sends its data to the server, which checks against the database, and sends a role back if valid.</p>
+<p><img src="images/edit_book_search.png" alt="Book editing search." width="800" /> <img src="images/edit_book_result.png" alt="Book editing page, allowing for editing and updating book information." width="600" /></p>
+<h2 id="p2.3-database-tier-design-data-usage-3030">P2.3 Database tier design, data, usage [30/30/*]</h2>
+<p>Our database has 6 tables:</p>
+<figure>
+<img src="images/database_design.png" alt="Database Design" width="800" /><figcaption>Database Design</figcaption>
+</figure>
+<p>The users table is a completely independant table for storing login information and roles.</p>
+<p>The main table is books, as it stores the information for each unique book entry in the database. The other four tables are child tables that store tangential information about books, usually in a one-to-many relationship. Keywords stores individual keywords mapped to book ids, reviews stores individual reviews for each book, articles stores a unique article for each book, and inspirations store a link between one book and another (if the other book was an inspiration/source for the book).</p>
+<h2 id="p2.4-new-features-and-tools-2030">P2.4 New features and tools [20/30/*]</h2>
+<p>Using the 256-bit Secure Hashing Algorithm, we are able to store user passwords as hashes, allowing us to verify passwords without an intruder being able to steal them from our storage.</p>
+<figure>
+<img src="images/password_secure_storage1.png" alt="Password hashing implementation" width="400" /><figcaption>Password hashing implementation</figcaption>
+</figure>
+<figure>
+<img src="images/password_secure_storage2.png" alt="Hashes stored in database" width="800" /><figcaption>Hashes stored in database</figcaption>
+</figure>
+<p>However, our project does not make use of some other useful tools, such as Docker, and we believe this is a small shortcoming.</p>
+<h2 id="p2.5-problem-solving-algorithms-3030">P2.5 Problem solving algorithms [30/30/*]</h2>
+<p>Books in our webapp have a component known as Inspirations. If a book was inspired by (or references) another book, we can enter that inspiration into the database’s inspirations table. We implemented a BFS algorithm to retrieve stored inspirations from the database and create a list of inspirations, custom for each individual book. The core of this algorithm is taking the inspirations of each book, and adding those inspirations to the list in order. So, if a user wants an inspirations list for book 1, they will see book 2 (which inspired book 1) as well as book 3 (which inspired book 2). We believe this feature is useful for a curious reader to see a chain of influence through famous works. Ideally (with more time), we would implement this as a tree instead of a list, to better visualise the degrees of relation among the inspirations.</p>
+<p><img src="images/user_book_search_inspirations.png" alt="Inspirations for “Book1”" width="400" /> <img src="images/user_book_search_inspirations2.png" alt="Inspirations for “Book2”" width="400" /></p>
+<h2 id="p2.6-efficiency-and-robustness-2020">P2.6 Efficiency and robustness [20/20/*]</h2>
+<p>Our webapp is very responsive with almost no UI lag of any kind. In situations where excessive output or data may be generated (such as getting an inspiration list in 1000s), we’ve placed reasonable limits on how much data is retrieved from the database (usually a limit of 100 rows) reducing all worst-case performance.</p>

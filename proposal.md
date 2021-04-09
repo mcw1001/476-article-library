@@ -39,6 +39,9 @@ The Home page will have a search form, as well as a form for adding a book.
 
 If the user logs in as an admin (a second-level role) they will have the book creation and editing permissions, allowing them to adjust content on the site and edit articles and book data (and also delete books).
 
+The database design is as follows:
+![Our database](images/database_design.png){width=800px}
+
 The project will use html, JavaScript, Jquery, AJAX, PHP, MySQL, NodeJS, and XAMPP as tools.
 
 ## Milestones & schedule
