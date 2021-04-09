@@ -3,6 +3,11 @@ title:  'CP476 Project Report'
 author: Michael Child-Wynne-Jones, Morgenne Besenschek, Chang Xing Li
 date: 2021-04-09
 ---
+# CP476 Project Report
+
+## Authors
+Michael Child-Wynne-Jones, Morgenne Besenschek, Chang Xing Li
+
 
 # Proof of Accomplishment: System design & implementation
 ## P2.1 Client side component & UI           [25/30/\*]
